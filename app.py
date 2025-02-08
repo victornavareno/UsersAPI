@@ -3,9 +3,11 @@ from flask_jwt_extended import JWTManager
 from flask_cors import CORS
 from models import db
 from config import Config
+from routes import auth
 import routes
 
 app = Flask(__name__)
+app.register_blueprint(auth, url_prefix='/')
 app.config.from_object(Config)
 
 db.init_app(app)

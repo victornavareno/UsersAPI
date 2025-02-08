@@ -5,7 +5,7 @@ db = SQLAlchemy()
 bcrypt = Bcrypt()
 
 class User(db.Model):
-    __tablename__ = "users" # si pongo solo "user" me da error porque user es una palabra reservada de SQL
+    __tablename__ = "users" # si pongo solo "user" me da error porque user es una palabra reservada de SQL maldision
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(255), nullable=False)  # aqui guarderemos el hash de la contraseña

@@ -4,6 +4,11 @@ from models import db, User
 
 auth = Blueprint("auth", __name__)
 
+# test default route json response
+@auth.route("/", methods=["GET"])
+def home():
+    return jsonify({"message": "Hello World!"})
+
 # crea la cuenta de un usuario
 @auth.route("/register", methods=["POST"])
 def register():
@@ -45,6 +50,7 @@ def login():
 def profile():
     current_user = get_jwt_identity()
     return jsonify(current_user)
+
 
 
 # todo: add authentication with google using 0Auth2.0
