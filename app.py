@@ -7,12 +7,14 @@ from routes import auth
 import routes
 
 app = Flask(__name__)
-app.register_blueprint(auth, url_prefix='/')
 app.config.from_object(Config)
 
 db.init_app(app)
 jwt = JWTManager(app)
 CORS(app)  # para conectarnos con el frontend
+
+# register blueprints
+app.register_blueprint(routes.auth, url_prefix='/auth')
 
 with app.app_context():
     db.create_all()
