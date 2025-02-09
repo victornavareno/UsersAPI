@@ -15,7 +15,7 @@ def register():
     data = request.json
     email = data.get("email")
     password = data.get("password")
-    user_type = data.get("user_type", "asistente")  # rol por defecto: asistente
+    role = data.get("role", "asistente")  # rol por defecto: asistente
 
     if not email or not password:
         return jsonify({"error": "Missing email or password"}), 400
@@ -23,7 +23,7 @@ def register():
     if User.query.filter_by(email=email).first():
         return jsonify({"error": "User already exists"}), 400
 
-    user = User(email=email, user_type=user_type)
+    user = User(email=email, role=role)
     user.set_password(password)
 
     db.session.add(user)
@@ -42,14 +42,14 @@ def login():
     if not user or not user.check_password(password):
         return jsonify({"error": "Invalid credentials"}), 401
 
-    access_token = create_access_token(identity={"email": user.email, "user_type": user.user_type})
-    return jsonify({"token": access_token})
+    access_token = create_access_token(identity=user.email)
+    return jsonify({"token": access_token}), 200
 
 @auth.route("/profile", methods=["GET"])
 @jwt_required()
 def profile():
     current_user = get_jwt_identity()
-    return jsonify(current_user)
+    return jsonify(current_user), 200
 
 
 
