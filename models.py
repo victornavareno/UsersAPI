@@ -31,8 +31,8 @@ class Host(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id", ondelete="CASCADE"), unique=True, nullable=False)  # clave foranea con users
     name = db.Column(db.String(255), nullable=False)
-    address = db.Column(db.String(255), nullable=False)
-    city = db.Column(db.String(100), nullable=False)
+    address = db.Column(db.String(255), nullable=True)
+    city = db.Column(db.String(100), nullable=True)
     hosted_events = db.Column(ARRAY(db.Integer), default=[])  # array de events IDs (managed externally)
 
     user = db.relationship("User", backref=db.backref("host_profile", uselist=False, cascade="all, delete-orphan"))

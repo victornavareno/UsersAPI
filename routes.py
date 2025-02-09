@@ -15,7 +15,7 @@ def register():
     data = request.json
     email = data.get("email")
     password = data.get("password")
-    role = data.get("role", "subscriber")  # Default role is subscriber
+    role = data.get("role", "subscriber")  # por defecto es qsubscriber
     name = data.get("name")
     address = data.get("address")
     city = data.get("city")
@@ -37,8 +37,8 @@ def register():
 
     # Create role-specific profile
     if role == "host":
-        if not address or not city:
-            return jsonify({"error": "Hosts must provide address and city"}), 400
+        # if not address or not city:
+        #     return jsonify({"error": "Hosts must provide address and city"}), 400
         host_profile = Host(user_id=user.id, name=name, address=address, city=city)
         db.session.add(host_profile)
 
