@@ -1,5 +1,5 @@
 # Flask Authentication API
-This Flask-based API provides user **authentication and profile management**. The API differentiates between two types of users: Hosts and Subscribers. I added the **blueprint /auth/ as a HTTP request prefix.**
+This Flask, SQLAlchemy and JWT Python API provides user **authentication and profile management**. The API differentiates between two types of users: Hosts and Subscribers. I added the **blueprint /auth/ as a HTTP request prefix.**
 
 ---
 ### User Registration
