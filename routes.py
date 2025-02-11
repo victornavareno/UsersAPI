@@ -13,10 +13,12 @@ def home():
 @auth.route("/register", methods=["POST"])
 def register():
     data = request.json
+    name = data.get("name")
     email = data.get("email")
     password = data.get("password")
     role = data.get("role", "subscriber")  # por defecto es qsubscriber
-    name = data.get("name")
+    
+    # opcionales en la pagina register
     address = data.get("address")
     city = data.get("city")
 
@@ -30,7 +32,7 @@ def register():
         return jsonify({"error": "User already exists"}), 400
 
     # Create base user
-    user = User(email=email, role=role)
+    user = User(name=name, email=email, role=role)
     user.set_password(password)
     db.session.add(user)
     db.session.commit()
