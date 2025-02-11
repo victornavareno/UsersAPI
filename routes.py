@@ -18,8 +18,9 @@ def register():
     password = data.get("password")
     role = data.get("role", "subscriber")  # Default: subscriber
     city = data.get("city")
+    address = data.get("address") if role == "host" else None  # Only for hosts
 
-    # verify required fields
+    # Verify required fields
     if not all([name, email, password, city]):
         return jsonify({"error": "Missing required fields"}), 400
 
@@ -35,14 +36,11 @@ def register():
     db.session.add(user)
     db.session.commit()
 
-    # Create role-specific profile (address added later for hosts - reducing required friction for normal users in fronted
+    # Create host profile with address
     if role == "host":
-        host_profile = Host(user_id=user.id)
+        host_profile = Host(user_id=user.id, address=address)
         db.session.add(host_profile)
-    else:
-        subscriber_profile = Subscriber(user_id=user.id)
-        db.session.add(subscriber_profile)
-
+    
     db.session.commit()
     return jsonify({"message": f"User {role} registered successfully!", "user_id": user.id}), 201
 
